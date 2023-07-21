@@ -4,6 +4,7 @@ import styled from "styled-components"
 
 function ProductionDetail({ handleEdit, deleteProduction }) {
 	const [production, setProduction] = useState({ cast_members: [] })
+	// eslint-disable-next-line
 	const [error, setError] = useState(null)
 	//Student Challenge: GET One
 	const { params } = useParams()

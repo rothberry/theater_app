@@ -1,5 +1,4 @@
 // 📚 Review With Students:
-// Request response cycle
 import { Route, Routes, useNavigate } from "react-router-dom"
 import { createGlobalStyle } from "styled-components"
 import { useEffect, useState } from "react"
@@ -43,7 +42,7 @@ function App() {
 	const updateProduction = (updated_production) =>
 		setProductions((productions) =>
 			productions.map((production) =>
-				production.id == updated_production.id ? updated_production : production
+				production.id === updated_production.id ? updated_production : production
 			)
 		)
 
@@ -58,10 +57,6 @@ function App() {
 		setProductionEdit(production)
 		history.push(`/productions/edit/${production.id}`)
 	}
-
-	// 9.✅ Return a second block of JSX
-	// If the user is not in state return JSX and include <GlobalStyle /> <Navigation/> and  <Authentication setUser={setUser}/>
-	//9.1 Test out our route! Logout and try to visit other pages. Login and try to visit other pages again. Refresh the page and note that you are still logged in!
 
 	if (!!currentUser) {
 		return (
@@ -108,7 +103,6 @@ function App() {
 						path="/authentication"
 						element={<Authentication setUser={setUser} />}
 					/>
-					{/* <Route element={<NotFound />} /> */}
 				</Routes>
 			</>
 		)

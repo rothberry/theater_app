@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 from ipdb import set_trace
-from dotenv import dotenv_values
-from flask import Flask, request, make_response, abort, session, jsonify
+from dotenv import dotenv_values, load_dotenv
+from flask import Flask, request, make_response, abort, session, jsonify, render_template
 from flask_migrate import Migrate
 
 from flask_restful import Api, Resource
@@ -14,11 +14,18 @@ from flask_bcrypt import Bcrypt
 from models import db, Production, CastMember, User
 import os
 
-app = Flask(__name__)
+load_dotenv()
+app = Flask(
+      __name__,
+      static_url_path='',
+      static_folder='../client/build',
+      template_folder='../client/build'
+  )
 CORS(app)
 bcrypt = Bcrypt(app)
 
-ENV = dotenv_values("../.env")
+
+print(os.environ.get("SQLALCHEMY_DATABASE_URI"))
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("SQLALCHEMY_DATABASE_URI")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
@@ -29,6 +36,11 @@ migrate = Migrate(app, db)
 db.init_app(app)
 
 api = Api(app)
+
+@app.route("/")
+@app.route("/<int:id>")
+def index(id=0):
+    return render_template("index.html")
 
 
 class Productions(Resource):
